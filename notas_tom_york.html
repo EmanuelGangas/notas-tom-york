@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas Tom York</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4a1c40 0%, #6b2d5c 25%, #8b3a6d 50%, #6b2d5c 75%, #4a1c40 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #f8f4f9 0%, #f0e6f2 100%);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(58, 28, 66, 0.5);
+            border: 3px solid #9b4d8a;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a1c40;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(91, 45, 100, 0.3);
+            border-bottom: 3px solid #9b4d8a;
+            padding-bottom: 15px;
+        }
+
+        .notes-container {
+            margin-bottom: 30px;
+        }
+
+        .note-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 40px;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+            background: linear-gradient(145deg, #ffffff 0%, #f5ebe0 100%);
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #d4a5c9;
+            transition: all 0.3s;
+        }
+
+        .note-row:hover {
+            box-shadow: 0 5px 15px rgba(91, 45, 100, 0.2);
+            border-color: #9b4d8a;
+        }
+
+        .note-row label {
+            font-weight: 600;
+            color: #4a1c40;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #c9a8d4;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #faf5fa;
+            transition: all 0.3s;
+            color: #4a1c40;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #6b2d5c;
+            box-shadow: 0 0 10px rgba(107, 45, 92, 0.4);
+            background: #fff;
+        }
+
+        .input-group span {
+            margin-left: 8px;
+            color: #6b2d5c;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .btn-delete {
+            background: #6b2d5c;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .btn-delete:hover {
+            background: #4a1c40;
+            transform: scale(1.1);
+        }
+
+        .btn-delete:disabled {
+            background: #a88aa8;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-add {
+            background: linear-gradient(145deg, #8b3a6d 0%, #6b2d5c 100%);
+            color: white;
+            border: 2px solid #9b4d8a;
+        }
+
+        .btn-add:hover {
+            background: linear-gradient(145deg, #6b2d5c 0%, #4a1c40 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(107, 45, 92, 0.5);
+        }
+
+        .btn-calculate {
+            background: linear-gradient(145deg, #4a1c40 0%, #6b2d5c 100%);
+            color: white;
+            flex-grow: 1;
+            border: 2px solid #9b4d8a;
+        }
+
+        .btn-calculate:hover {
+            background: linear-gradient(145deg, #6b2d5c 0%, #8b3a6d 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 28, 64, 0.5);
+        }
+
+        .result-section {
+            background: linear-gradient(135deg, #4a1c40 0%, #6b2d5c 50%, #8b3a6d 100%);
+            padding: 30px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            display: none;
+            border: 3px solid #9b4d8a;
+            box-shadow: 0 10px 30px rgba(58, 28, 66, 0.4);
+        }
+
+        .result-section.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-title {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #f0e6f2;
+        }
+
+        .result-value {
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .result-details {
+            font-size: 1em;
+            opacity: 0.95;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            color: #f8f4f9;
+        }
+
+        .error-message {
+            background: linear-gradient(145deg, #6b2d5c 0%, #4a1c40 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+            font-weight: 600;
+            border: 2px solid #9b4d8a;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: showError 0.3s ease-in;
+        }
+
+        @keyframes showError {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .note-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .btn-delete {
+                width: 100%;
+                height: 40px;
+            }
+
+            .buttons-container {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .result-value {
+                font-size: 2.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Notas Tom York</h1>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="notes-container" id="notesContainer">
+            <!-- Las casillas se generan dinámicamente -->
+        </div>
+
+        <div class="buttons-container">
+            <button class="btn btn-add" id="btnAdd" onclick="addNoteRow()">
+                + Agregar Más Casilla
+            </button>
+            <button class="btn btn-calculate" id="btnCalculate" onclick="calculateAverage()">
+                Calcular Promedio
+            </button>
+        </div>
+
+        <div class="result-section" id="resultSection">
+            <div class="result-title">Promedio Final</div>
+            <div class="result-value" id="resultValue">0.00</div>
+            <div class="result-details" id="resultDetails"></div>
+        </div>
+    </div>
+
+    <script>
+        let noteCount = 4;
+        const maxNotes = 20;
+        const minNotes = 4;
+
+        // Generar las casillas iniciales
+        function generateNoteRows() {
+            const container = document.getElementById('notesContainer');
+            container.innerHTML = '';
+
+            for (let i = 1; i <= noteCount; i++) {
+                const row = document.createElement('div');
+                row.className = 'note-row';
+                row.id = `noteRow${i}`;
+
+                row.innerHTML = `
+                    <div>
+                        <label>Casilla ${i}</label>
+                        <div class="input-group">
+                            <input type="number" 
+                                   id="note${i}" 
+                                   placeholder="Nota" 
+                                   min="0" 
+                                   max="100" 
+                                   step="0.01"
+                                   required>
+                            <span>Nota</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Porcentaje</label>
+                        <div class="input-group">
+                            <input type="number" 
+                                   id="percent${i}" 
+                                   placeholder="Porcentaje" 
+                                   min="0" 
+                                   max="100" 
+                                   step="0.01"
+                                   required>
+                            <span>%</span>
+                        </div>
+                    </div>
+                    <button class="btn-delete" 
+                            id="btnDelete${i}" 
+                            onclick="deleteNoteRow(${i})" 
+                            ${i <= 4 ? 'disabled' : ''}>
+                        ×
+                    </button>
+                `;
+
+                container.appendChild(row);
+            }
+        }
+
+        // Agregar más casilla
+        function addNoteRow() {
+            if (noteCount >= maxNotes) {
+                showError('Has alcanzado el límite máximo de casillas (20)');
+                return;
+            }
+
+            noteCount++;
+            const container = document.getElementById('notesContainer');
+
+            const row = document.createElement('div');
+            row.className = 'note-row';
+            row.id = `noteRow${noteCount}`;
+
+            row.innerHTML = `
+                <div>
+                    <label>Casilla ${noteCount}</label>
+                    <div class="input-group">
+                        <input type="number" 
+                               id="note${noteCount}" 
+                               placeholder="Nota" 
+                               min="0" 
+                               max="100" 
+                               step="0.01"
+                               required>
+                        <span>Nota</span>
+                    </div>
+                </div>
+                <div>
+                    <label>Porcentaje</label>
+                    <div class="input-group">
+                        <input type="number" 
+                               id="percent${noteCount}" 
+                               placeholder="Porcentaje" 
+                               min="0" 
+                               max="100" 
+                               step="0.01"
+                               required>
+                        <span>%</span>
+                    </div>
+                </div>
+                <button class="btn-delete" 
+                        id="btnDelete${noteCount}" 
+                        onclick="deleteNoteRow(${noteCount})">
+                    ×
+                </button>
+            `;
+
+            container.appendChild(row);
+            hideError();
+        }
+
+        // Eliminar casilla
+        function deleteNoteRow(index) {
+            if (noteCount <= minNotes) {
+                showError('Debes mantener al menos 4 casillas');
+                return;
+            }
+
+            const row = document.getElementById(`noteRow${index}`);
+            row.remove();
+
+            noteCount--;
+
+            // Reorganizar las casillas restantes
+            const container = document.getElementById('notesContainer');
+            const rows = container.getElementsByClassName('note-row');
+
+            for (let i = 0; i < rows.length; i++) {
+                const newRow = rows[i];
+                newRow.id = `noteRow${i + 1}`;
+                newRow.querySelector('label').textContent = `Casilla ${i + 1}`;
+
+                const noteInput = newRow.querySelector('#note' + (i + 1 + 1));
+                const percentInput = newRow.querySelector('#percent' + (i + 1 + 1));
+                const deleteBtn = newRow.querySelector('#btnDelete' + (i + 1 + 1));
+
+                if (noteInput) {
+                    noteInput.id = `note${i + 1}`;
+                }
+                if (percentInput) {
+                    percentInput.id = `percent${i + 1}`;
+                }
+                if (deleteBtn) {
+                    deleteBtn.id = `btnDelete${i + 1}`;
+                    deleteBtn.onclick = function() { deleteNoteRow(i + 1); };
+                    deleteBtn.disabled = (i + 1 <= 4);
+                }
+            }
+
+            hideError();
+        }
+
+        // Calcular promedio
+        function calculateAverage() {
+            const errorDiv = document.getElementById('errorMessage');
+            const resultSection = document.getElementById('resultSection');
+            const resultValue = document.getElementById('resultValue');
+            const resultDetails = document.getElementById('resultDetails');
+
+            let totalWeighted = 0;
+            let totalPercent = 0;
+            let validInputs = 0;
+            let details = [];
+
+            for (let i = 1; i <= noteCount; i++) {
+                const noteInput = document.getElementById(`note${i}`);
+                const percentInput = document.getElementById(`percent${i}`);
+
+                const note = parseFloat(noteInput.value);
+                const percent = parseFloat(percentInput.value);
+
+                if (noteInput.value === '' || percentInput.value === '') {
+                    showError(`Por favor, completa la Casilla ${i} (nota y porcentaje)`);
+                    resultSection.classList.remove('show');
+                    return;
+                }
+
+                if (note < 0 || note > 100) {
+                    showError(`La nota de la Casilla ${i} debe estar entre 0 y 100`);
+                    resultSection.classList.remove('show');
+                    return;
+                }
+
+                if (percent < 0 || percent > 100) {
+                    showError(`El porcentaje de la Casilla ${i} debe estar entre 0 y 100`);
+                    resultSection.classList.remove('show');
+                    return;
+                }
+
+                totalWeighted += note * percent;
+                totalPercent += percent;
+                validInputs++;
+                details.push(`Casilla ${i}: ${note} × ${percent}% = ${note * percent}`);
+            }
+
+            if (totalPercent === 0) {
+                showError('El total de porcentajes debe ser mayor que 0');
+                resultSection.classList.remove('show');
+                return;
+            }
+
+            const average = totalWeighted / totalPercent;
+
+            // Mostrar resultado
+            resultValue.textContent = average.toFixed(2);
+            resultDetails.innerHTML = `
+                <strong>Total de porcentajes:</strong> ${totalPercent.toFixed(2)}%<br>
+                <strong>Notas válidas:</strong> ${validInputs}<br>
+                <div style="margin-top: 10px; font-size: 0.9em;">
+                    ${details.map(d => `<div>${d}</div>`).join('')}
+                </div>
+            `;
+            resultSection.classList.add('show');
+            hideError();
+        }
+
+        // Mostrar mensaje de error
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+        }
+
+        // Hiddeno mensaje de error
+        function hideError() {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.classList.remove('show');
+        }
+
+        // Generar las casillas al cargar la página
+        generateNoteRows();
+    </script>
+</body>
+</html>
