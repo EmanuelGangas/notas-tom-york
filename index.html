@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="format-detection" content="telephone=no">
-    <title>Notas Tom York</title>
+    <title>Notas Tom York ♡</title>
     
     <!-- Fuentes modernas de Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -105,7 +105,7 @@
             margin-top: 10px;
         }
 
-        /* notas-container */
+        /* notes-container */
         .notes-container {
             margin-bottom: 25px;
             width: 100%;
@@ -223,7 +223,7 @@
             width: 100%;
         }
 
-        /* Botones optimizados paratouch */
+        /* Botones optimizados para touch */
         .btn {
             padding: 16px 28px;
             border: none;
@@ -515,7 +515,7 @@
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation: none !important;
-                transition: none !important;
+                transition: none !original;
             }
         }
     </style>
@@ -524,7 +524,7 @@
     <div class="container">
         <div class="header">
             <img src="tomyork.jpg" alt="Logo Tom York" class="logo-image">
-            <h1>Notas Tom York <3 </h1>
+            <h1>Notas Tom York</h1>
             <p class="subtitle">Calculadora de Promedio ponderado</p>
         </div>
 
@@ -536,7 +536,7 @@
 
         <div class="buttons-container">
             <button class="btn btn-add" id="btnAdd" onclick="addNoteRow()">
-                <span>+</span> Agregar otra Casilla
+                <span>+</span> Agregar otra casilla
             </button>
             <button class="btn btn-calculate" id="btnCalculate" onclick="calculateAverage()">
                 Calcular Promedio
@@ -554,6 +554,23 @@
         let noteCount = 4;
         const maxNotes = 20;
         const minNotes = 4;
+
+        // Función para formatar número: 1 entero y máximo 2 decimales
+        function formatNumber(num) {
+            // Si el número es entero, no mostrar decimales
+            if (num === Math.floor(num)) {
+                return num.toFixed(0);
+            }
+            // Si tiene 1 decimal, mostrar 1
+            if (num.toFixed(1) === num.toFixed(1)) {
+                const decimalPart = num.toString().split('.')[1];
+                if (decimalPart && decimalPart.length === 1) {
+                    return num.toFixed(1);
+                }
+            }
+            // Mostrar máximo 2 decimales
+            return num.toFixed(2).replace(/\.?0+$/, '') || num.toFixed(0);
+        }
 
         // Generar las casillas iniciales
         function generateNoteRows() {
@@ -755,8 +772,9 @@
 
             const average = totalWeighted / totalPercent;
 
-            // Mostrar resultado con scroll suave
-            resultValue.textContent = average.toFixed(2);
+            // Mostrar resultado con formato: 1 entero y máximo 2 decimales
+            const formattedAverage = formatNumber(average);
+            resultValue.textContent = formattedAverage;
             resultDetails.innerHTML = `
                 <strong>Total de porcentajes:</strong> ${totalPercent.toFixed(2)}%<br>
                 <strong>Notas válidas:</strong> ${validInputs}<br>
