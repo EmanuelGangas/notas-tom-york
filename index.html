@@ -2,242 +2,356 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="format-detection" content="telephone=no">
     <title>Notas Tom York</title>
+    
+    <!-- Fuentes modernas de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        * {
+        /* Reset moderno */
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #4a1c40 0%, #6b2d5c 25%, #8b3a6d 50%, #6b2d5c 75%, #4a1c40 100%);
-            min-height: 100vh;
-            padding: 20px;
+        /* Variables de colores morados */
+        :root {
+            --purple-dark: #2d1b35;
+            --purple-primary: #4a1c40;
+            --purple-medium: #6b2d5c;
+            --purple-light: #8b3a6d;
+            --purple-vibrant: #9b4d8a;
+            --purple-pale: #b87a9e;
+            --purple-faint: #d4a5c9;
+            --lavender: #f0e6f2;
+            --lavender-light: #f8f4f9;
+            --white: #ffffff;
+            --gradient-1: linear-gradient(135deg, #2d1b35 0%, #4a1c40 25%, #6b2d5c 50%, #4a1c40 75%, #2d1b35 100%);
+            --gradient-2: linear-gradient(145deg, #f8f4f9 0%, #f0e6f2 100%);
+            --gradient-3: linear-gradient(135deg, #4a1c40 0%, #6b2d5c 50%, #8b3a6d 100%);
+            --gradient-4: linear-gradient(145deg, #6b2d5c 0%, #8b3a6d 100%);
         }
 
+        /* Body optimizado para móviles */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--gradient-1);
+            min-height: 100vh;
+            padding: 15px;
+            line-height: 1.6;
+            color: var(--purple-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 16px;
+            touch-action: manipulation;
+        }
+
+        /* Container responsivo */
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: linear-gradient(145deg, #f8f4f9 0%, #f0e6f2 100%);
-            padding: 40px;
+            background: var(--gradient-2);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(45, 27, 53, 0.6);
+            border: 3px solid var(--purple-vibrant);
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Header con imagen */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-image {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(58, 28, 66, 0.5);
-            border: 3px solid #9b4d8a;
+            border: 4px solid var(--purple-vibrant);
+            box-shadow: 0 10px 40px rgba(91, 45, 100, 0.4);
+            object-fit: cover;
+            display: block;
+            background: var(--lavender-light);
         }
 
         h1 {
-            text-align: center;
-            color: #4a1c40;
-            font-size: 2.5em;
-            margin-bottom: 30px;
+            font-family: 'Poppins', sans-serif;
+            color: var(--purple-primary);
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 15px;
             text-shadow: 2px 2px 4px rgba(91, 45, 100, 0.3);
-            border-bottom: 3px solid #9b4d8a;
+            border-bottom: 3px solid var(--purple-vibrant);
             padding-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
+        /* Subtítulo opcional */
+        .subtitle {
+            font-family: 'Nunito', sans-serif;
+            color: var(--purple-medium);
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* notas-container */
         .notes-container {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            width: 100%;
         }
 
+        /* Casilla responsiva */
         .note-row {
             display: grid;
-            grid-template-columns: 1fr 1fr 40px;
-            gap: 15px;
-            margin-bottom: 15px;
+            grid-template-columns: 1fr 1fr 45px;
+            gap: 12px;
+            margin-bottom: 12px;
             align-items: center;
-            background: linear-gradient(145deg, #ffffff 0%, #f5ebe0 100%);
-            padding: 15px;
-            border-radius: 12px;
-            border: 2px solid #d4a5c9;
-            transition: all 0.3s;
+            background: var(--white);
+            padding: 18px;
+            border-radius: 16px;
+            border: 2px solid var(--purple-faint);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
         }
 
         .note-row:hover {
-            box-shadow: 0 5px 15px rgba(91, 45, 100, 0.2);
-            border-color: #9b4d8a;
+            box-shadow: 0 8px 30px rgba(91, 45, 100, 0.2);
+            border-color: var(--purple-vibrant);
+            transform: translateY(-2px);
         }
 
         .note-row label {
-            font-weight: 600;
-            color: #4a1c40;
-            margin-bottom: 5px;
-            font-size: 14px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            color: var(--purple-primary);
+            margin-bottom: 8px;
+            font-size: clamp(0.85rem, 2.5vw, 1rem);
+            display: block;
         }
 
+        /* Input optimizado para móviles */
         .input-group {
             display: flex;
             align-items: center;
+            gap: 8px;
         }
 
         .input-group input {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #c9a8d4;
-            border-radius: 8px;
-            font-size: 16px;
-            background: #faf5fa;
+            padding: 14px;
+            border: 2px solid var(--purple-faint);
+            border-radius: 12px;
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            background: var(--lavender-light);
             transition: all 0.3s;
-            color: #4a1c40;
+            color: var(--purple-primary);
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            height: 50px;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
         .input-group input:focus {
             outline: none;
-            border-color: #6b2d5c;
-            box-shadow: 0 0 10px rgba(107, 45, 92, 0.4);
-            background: #fff;
+            border-color: var(--purple-medium);
+            box-shadow: 0 0 12px rgba(107, 45, 92, 0.4);
+            background: var(--white);
+        }
+
+        .input-group input::placeholder {
+            color: var(--purple-pale);
+            font-style: italic;
         }
 
         .input-group span {
-            margin-left: 8px;
-            color: #6b2d5c;
-            font-weight: 600;
-            font-size: 14px;
+            color: var(--purple-medium);
+            font-weight: 700;
+            font-size: clamp(0.85rem, 2.5vw, 1rem);
+            font-family: 'Nunito', sans-serif;
+            min-width: 20px;
         }
 
+        /* Botón eliminar */
         .btn-delete {
-            background: #6b2d5c;
-            color: white;
+            background: var(--purple-medium);
+            color: var(--white);
             border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 8px;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(91, 45, 100, 0.3);
         }
 
-        .btn-delete:hover {
-            background: #4a1c40;
-            transform: scale(1.1);
+        .btn-delete:hover:not(:disabled) {
+            background: var(--purple-primary);
+            transform: scale(1.15);
+            box-shadow: 0 6px 20px rgba(91, 45, 100, 0.4);
         }
 
         .btn-delete:disabled {
-            background: #a88aa8;
+            background: var(--purple-faint);
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
 
+        /* Buttons container responsivo */
         .buttons-container {
             display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 12px;
+            margin-bottom: 25px;
             flex-wrap: wrap;
+            width: 100%;
         }
 
+        /* Botones optimizados paratouch */
         .btn {
-            padding: 15px 30px;
+            padding: 16px 28px;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 14px;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-transform: uppercase;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 0.5px;
+            min-height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn-add {
-            background: linear-gradient(145deg, #8b3a6d 0%, #6b2d5c 100%);
-            color: white;
-            border: 2px solid #9b4d8a;
+            background: var(--gradient-4);
+            color: var(--white);
+            border: 2px solid var(--purple-vibrant);
+            flex: 1;
+            min-width: 140px;
         }
 
         .btn-add:hover {
-            background: linear-gradient(145deg, #6b2d5c 0%, #4a1c40 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(107, 45, 92, 0.5);
+            background: linear-gradient(145deg, #4a1c40 0%, #6b2d5c 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(107, 45, 92, 0.5);
         }
 
         .btn-calculate {
-            background: linear-gradient(145deg, #4a1c40 0%, #6b2d5c 100%);
-            color: white;
-            flex-grow: 1;
-            border: 2px solid #9b4d8a;
+            background: var(--gradient-3);
+            color: var(--white);
+            flex: 2;
+            border: 2px solid var(--purple-vibrant);
+            min-width: 180px;
         }
 
         .btn-calculate:hover {
-            background: linear-gradient(145deg, #6b2d5c 0%, #8b3a6d 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 28, 64, 0.5);
+            background: linear-gradient(135deg, #6b2d5c 0%, #8b3a6d 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 28, 64, 0.5);
         }
 
+        /* Resultado responsivo */
         .result-section {
-            background: linear-gradient(135deg, #4a1c40 0%, #6b2d5c 50%, #8b3a6d 100%);
-            padding: 30px;
-            border-radius: 15px;
-            color: white;
+            background: var(--gradient-3);
+            padding: 25px;
+            border-radius: 20px;
+            color: var(--white);
             text-align: center;
             display: none;
-            border: 3px solid #9b4d8a;
-            box-shadow: 0 10px 30px rgba(58, 28, 66, 0.4);
+            border: 3px solid var(--purple-vibrant);
+            box-shadow: 0 15px 50px rgba(45, 27, 53, 0.5);
+            width: 100%;
         }
 
         .result-section.show {
             display: block;
-            animation: fadeIn 0.5s ease-in;
+            animation: fadeInScale 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        @keyframes fadeIn {
+        @keyframes fadeInScale {
             from {
                 opacity: 0;
-                transform: translateY(-10px);
+                transform: scale(0.9) translateY(-10px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: scale(1) translateY(0);
             }
         }
 
         .result-title {
-            font-size: 1.3em;
-            margin-bottom: 15px;
-            font-weight: 600;
-            color: #f0e6f2;
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            margin-bottom: 12px;
+            font-weight: 700;
+            color: var(--lavender-light);
         }
 
         .result-value {
-            font-size: 3em;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-family: 'Nunito', sans-serif;
+            font-size: clamp(2rem, 8vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--white);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
         }
 
         .result-details {
-            font-size: 1em;
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.85rem, 2.2vw, 1rem);
             opacity: 0.95;
             margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid rgba(255, 255, 255, 0.3);
-            color: #f8f4f9;
+            color: var(--lavender-light);
+            line-height: 1.7;
         }
 
+        /* Error message */
         .error-message {
             background: linear-gradient(145deg, #6b2d5c 0%, #4a1c40 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            color: var(--white);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 18px;
             display: none;
             text-align: center;
-            font-weight: 600;
-            border: 2px solid #9b4d8a;
+            font-weight: 700;
+            border: 2px solid var(--purple-vibrant);
+            font-family: 'Nunito', sans-serif;
+            font-size: clamp(0.85rem, 2.5vw, 1rem);
+            width: 100%;
         }
 
         .error-message.show {
             display: block;
-            animation: showError 0.3s ease-in;
+            animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        @keyframes showError {
+        @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(-5px);
+                transform: translateY(-8px);
             }
             to {
                 opacity: 1;
@@ -245,42 +359,174 @@
             }
         }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
+        /* Responsive para ANDROID, iOS, TABLETS */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+                font-size: 15px;
             }
 
-            h1 {
-                font-size: 1.8em;
+            .container {
+                padding: 25px;
+                border-radius: 20px;
+            }
+
+            .logo-image {
+                width: 100px;
+                height: 100px;
+                border-radius: 16px;
             }
 
             .note-row {
                 grid-template-columns: 1fr;
                 gap: 10px;
+                padding: 15px;
             }
 
             .btn-delete {
                 width: 100%;
-                height: 40px;
+                height: 48px;
+                margin-top: 8px;
             }
 
             .buttons-container {
                 flex-direction: column;
+                gap: 10px;
             }
 
             .btn {
                 width: 100%;
+                min-width: 100%;
+            }
+
+            .result-section {
+                padding: 20px;
+            }
+
+            .result-details {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .container {
+                padding: 20px;
+                border-radius: 16px;
+            }
+
+            .logo-image {
+                width: 80px;
+                height: 80px;
+                border-radius: 14px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .note-row {
+                padding: 12px;
+            }
+
+            .input-group input {
+                padding: 12px;
+                height: 48px;
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: 14px 20px;
+                font-size: 0.9rem;
+                min-height: 52px;
             }
 
             .result-value {
-                font-size: 2.2em;
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Optimización para iOS */
+        @supports (-webkit-touch-callout: none) {
+            .input-group input {
+                -webkit-appearance: none;
+                appearance: none;
+            }
+
+            .btn {
+                -webkit-touch-callout: none;
+            }
+        }
+
+        /* Optimización para Android */
+        @media (hover: none) {
+            .btn:hover {
+                transform: translateY(-2px);
+            }
+
+            .note-row:hover {
+                transform: translateY(-1px);
+            }
+        }
+
+        /* Landscape para móviles */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .logo-image {
+                width: 70px;
+                height: 70px;
+            }
+
+            h1 {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Soporte para touch */
+        .btn {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .input-group input {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Scroll suave */
+        .container {
+            scroll-behavior: smooth;
+        }
+
+        /* Accesibilidad */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Notas Tom York</h1>
+        <div class="header">
+            <img src="tomyork.jpg" alt="Logo Tom York" class="logo-image">
+            <h1>Notas Tom York</h1>
+            <p class="subtitle">Calculadora de Promedio ponderado</p>
+        </div>
 
         <div class="error-message" id="errorMessage"></div>
 
@@ -290,7 +536,7 @@
 
         <div class="buttons-container">
             <button class="btn btn-add" id="btnAdd" onclick="addNoteRow()">
-                + Agregar Más Casilla
+                <span>+</span> Agregar Más Casilla
             </button>
             <button class="btn btn-calculate" id="btnCalculate" onclick="calculateAverage()">
                 Calcular Promedio
@@ -325,10 +571,11 @@
                         <div class="input-group">
                             <input type="number" 
                                    id="note${i}" 
-                                   placeholder="Nota" 
+                                   placeholder="Ingresa nota" 
                                    min="0" 
                                    max="100" 
                                    step="0.01"
+                                   inputmode="decimal"
                                    required>
                             <span>Nota</span>
                         </div>
@@ -338,10 +585,11 @@
                         <div class="input-group">
                             <input type="number" 
                                    id="percent${i}" 
-                                   placeholder="Porcentaje" 
+                                   placeholder="Ingresa porcentaje" 
                                    min="0" 
                                    max="100" 
                                    step="0.01"
+                                   inputmode="decimal"
                                    required>
                             <span>%</span>
                         </div>
@@ -378,10 +626,11 @@
                     <div class="input-group">
                         <input type="number" 
                                id="note${noteCount}" 
-                               placeholder="Nota" 
+                               placeholder="Ingresa nota" 
                                min="0" 
                                max="100" 
                                step="0.01"
+                               inputmode="decimal"
                                required>
                         <span>Nota</span>
                     </div>
@@ -391,10 +640,11 @@
                     <div class="input-group">
                         <input type="number" 
                                id="percent${noteCount}" 
-                               placeholder="Porcentaje" 
+                               placeholder="Ingresa porcentaje" 
                                min="0" 
                                max="100" 
                                step="0.01"
+                               inputmode="decimal"
                                required>
                         <span>%</span>
                     </div>
@@ -431,9 +681,9 @@
                 newRow.id = `noteRow${i + 1}`;
                 newRow.querySelector('label').textContent = `Casilla ${i + 1}`;
 
-                const noteInput = newRow.querySelector('#note' + (i + 1 + 1));
-                const percentInput = newRow.querySelector('#percent' + (i + 1 + 1));
-                const deleteBtn = newRow.querySelector('#btnDelete' + (i + 1 + 1));
+                const noteInput = newRow.querySelector('#note' + (i + 2));
+                const percentInput = newRow.querySelector('#percent' + (i + 2));
+                const deleteBtn = newRow.querySelector('#btnDelete' + (i + 2));
 
                 if (noteInput) {
                     noteInput.id = `note${i + 1}`;
@@ -473,25 +723,28 @@
                 if (noteInput.value === '' || percentInput.value === '') {
                     showError(`Por favor, completa la Casilla ${i} (nota y porcentaje)`);
                     resultSection.classList.remove('show');
+                    noteInput.focus();
                     return;
                 }
 
                 if (note < 0 || note > 100) {
                     showError(`La nota de la Casilla ${i} debe estar entre 0 y 100`);
                     resultSection.classList.remove('show');
+                    noteInput.focus();
                     return;
                 }
 
                 if (percent < 0 || percent > 100) {
                     showError(`El porcentaje de la Casilla ${i} debe estar entre 0 y 100`);
                     resultSection.classList.remove('show');
+                    percentInput.focus();
                     return;
                 }
 
                 totalWeighted += note * percent;
                 totalPercent += percent;
                 validInputs++;
-                details.push(`Casilla ${i}: ${note} × ${percent}% = ${note * percent}`);
+                details.push(`Casilla ${i}: ${note} × ${percent}% = ${(note * percent).toFixed(2)}`);
             }
 
             if (totalPercent === 0) {
@@ -502,17 +755,25 @@
 
             const average = totalWeighted / totalPercent;
 
-            // Mostrar resultado
+            // Mostrar resultado con scroll suave
             resultValue.textContent = average.toFixed(2);
             resultDetails.innerHTML = `
                 <strong>Total de porcentajes:</strong> ${totalPercent.toFixed(2)}%<br>
                 <strong>Notas válidas:</strong> ${validInputs}<br>
-                <div style="margin-top: 10px; font-size: 0.9em;">
-                    ${details.map(d => `<div>${d}</div>`).join('')}
+                <div style="margin-top: 12px; font-size: 0.95em;">
+                    ${details.map(d => `<div style="padding: 4px 0;">${d}</div>`).join('')}
                 </div>
             `;
             resultSection.classList.add('show');
             hideError();
+
+            // Scroll suave al resultado
+            setTimeout(() => {
+                resultSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }, 100);
         }
 
         // Mostrar mensaje de error
@@ -530,6 +791,13 @@
 
         // Generar las casillas al cargar la página
         generateNoteRows();
+
+        // Evitar zoom doble touch en iOS
+        document.addEventListener('touchmove', function(e) {
+            if (e.scale !== 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 </html>
